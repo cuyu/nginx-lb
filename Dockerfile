@@ -1,11 +1,11 @@
 # Need the unbuntu OS installed `wget` and `c++ compiler`
-FROM ubuntu
+FROM debian:jessie
 
 # Install `wget` and `c,c++ compiler`
 RUN apt-get -qq update \
 		&& apt-get -qq -y install build-essential \
 		&& apt-get -qq -y install wget \
-		&& apt-get clean
+		&& rm -rf /var/lib/apt/lists/*
 
 # Install nginx according to https://www.nginx.com/resources/admin-guide/installing-nginx-open-source/
 # Install NGINX Dependencies

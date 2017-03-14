@@ -1,6 +1,8 @@
 ## nginx-lb
 
-A docker image to start a load balancer using Nginx.
+A docker image to start a load balancer (with [sticky](https://bitbucket.org/nginx-goodies/nginx-sticky-module-ng) module) using Nginx.
+
+*Since we use the third-party module ([sticky](https://bitbucket.org/nginx-goodies/nginx-sticky-module-ng)), the Nginx must be compiled from the source.*
 
 ### Use
 
