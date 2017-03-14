@@ -2,7 +2,7 @@
 
 A docker image to start a load balancer (with [sticky](https://bitbucket.org/nginx-goodies/nginx-sticky-module-ng) module) using Nginx.
 
-*Since we use the third-party module ([sticky](https://bitbucket.org/nginx-goodies/nginx-sticky-module-ng)), the Nginx must be compiled from the source.*
+*Since we use the third-party module ([sticky](https://bitbucket.org/nginx-goodies/nginx-sticky-module-ng)), the Nginx must be compiled from the source. To reduce more image size, maybe we can copy the compiled files into the images directly (so we do not install C/C++ compiler in the image).*
 
 ### Use
 
