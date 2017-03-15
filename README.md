@@ -9,21 +9,36 @@ A docker image to start a load balancer (with [sticky](https://bitbucket.org/ngi
 1. To build the docker image:
 
    ```
-   docker build -t nginx-lb:v1 .
+   docker build -t nginx-lb .
    ```
 
 
-2. Revise the `nginx.conf`, with specific hostnames in it.
-
-3. Run the docker container with specific `nginx.conf` (with load balance enabled):
+2. Create a file named `hosts`, with specific hostnames (include port) in it.
+   For example:
 
    ```
-   docker run --name lb -v /Users/CYu/Code/Docker/nginx-lb/nginx.conf:/usr/local/nginx/conf/nginx.conf -p 8080:80 nginx-lb:v1
+   example-host1:8000
+   example-host2:8000
+   example-host3:8000
+   ```
+
+3. Run the docker container:
+
+   ```
+   docker run --rm --name lb -v /YOUR_OWN_PATH/hosts:/usr/local/hosts -p 8080:80 nginx-lb
    ```
 
    Then open `http://localhost:8080`, you will see the target web page.
 
+   **OR** if you want to proxy with ssl:
+
+   ```
+   docker run --rm --name lb -v /YOUR_OWN_PATH/hosts:/usr/local/hosts -p 8080:80 nginx-lb -ssl
+   ```
+
+   Then open `https://localhost:8080`, you will see the target web page.
+
 ### TODO
 
-1. Support proxy https web pages (i.e. enable ssl).
+1. ~~Support proxy https web pages (i.e. enable ssl).~~
 2. ~~Use smaller base image (maybe install g++ and wget on a basic ubuntu image).~~

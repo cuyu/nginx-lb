@@ -49,6 +49,8 @@ RUN wget http://nginx.org/download/nginx-1.10.3.tar.gz \
     && make \
     && make install
 
+COPY image_use /usr/local/
+
 # forward request and error logs to docker log collector
 RUN ln -sf /dev/stdout /usr/local/nginx/logs/access.log \
     && ln -sf /dev/stderr /usr/local/nginx/logs/error.log
@@ -56,4 +58,4 @@ RUN ln -sf /dev/stdout /usr/local/nginx/logs/access.log \
 EXPOSE 80 443
 
 # Start nginx service
-CMD ["/usr/local/nginx/sbin/nginx", "-g", "daemon off;"]
+ENTRYPOINT ["/usr/local/entry.sh"]
