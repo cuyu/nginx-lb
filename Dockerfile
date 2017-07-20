@@ -1,15 +1,20 @@
 # Need the unbuntu OS installed `wget` and `c++ compiler`
-FROM debian:jessie
+FROM alpine
 
 # Install `wget` and `c,c++ compiler`
-RUN apt-get -qq update \
-    && apt-get -qq -y install build-essential \
-    && apt-get -qq -y install wget \
-    && rm -rf /var/lib/apt/lists/*
+RUN apk update \
+    && apk upgrade \
+    && apk add --no-cache build-base \
+    && apk add --no-cache wget \
+    && apk add --no-cache perl \
+    && apk add --no-cache tar \
+    && apk add --no-cache bash
+
+WORKDIR /usr/local
 
 # Install nginx according to https://www.nginx.com/resources/admin-guide/installing-nginx-open-source/
 # Install NGINX Dependencies
-RUN wget https://nchc.dl.sourceforge.net/project/pcre/pcre/8.40/pcre-8.40.tar.gz \
+RUN wget --no-check-certificate  https://nchc.dl.sourceforge.net/project/pcre/pcre/8.40/pcre-8.40.tar.gz \
     && tar -zxf pcre-8.40.tar.gz \
     && rm pcre-8.40.tar.gz \
     && cd pcre-8.40 \
@@ -17,7 +22,7 @@ RUN wget https://nchc.dl.sourceforge.net/project/pcre/pcre/8.40/pcre-8.40.tar.gz
     && make \
     && make install
 
-RUN wget http://zlib.net/zlib-1.2.11.tar.gz \
+RUN wget --no-check-certificate  http://zlib.net/zlib-1.2.11.tar.gz \
     && tar -zxf zlib-1.2.11.tar.gz \
     && rm zlib-1.2.11.tar.gz \
     && cd zlib-1.2.11 \
@@ -25,7 +30,7 @@ RUN wget http://zlib.net/zlib-1.2.11.tar.gz \
     && make \
     && make install
 
-RUN wget http://www.openssl.org/source/openssl-1.0.2f.tar.gz \
+RUN wget --no-check-certificate http://www.openssl.org/source/openssl-1.0.2f.tar.gz \
     && tar -zxf openssl-1.0.2f.tar.gz \
     && rm openssl-1.0.2f.tar.gz \
     && cd openssl-1.0.2f \
@@ -34,14 +39,14 @@ RUN wget http://www.openssl.org/source/openssl-1.0.2f.tar.gz \
     && make install
 
 # Download nginx sticky module
-RUN wget https://bitbucket.org/nginx-goodies/nginx-sticky-module-ng/get/1.2.6.tar.gz \
-    && mv 1.2.6.tar.gz /usr/local/src/ \
+RUN mkdir /usr/local/src \
     && cd /usr/local/src \
+    && wget --no-check-certificate https://bitbucket.org/nginx-goodies/nginx-sticky-module-ng/get/1.2.6.tar.gz \
     && tar -xzf 1.2.6.tar.gz \
     && rm 1.2.6.tar.gz
 
 # Downloading the nginx Sources
-RUN wget http://nginx.org/download/nginx-1.10.3.tar.gz \
+RUN wget --no-check-certificate http://nginx.org/download/nginx-1.10.3.tar.gz \
     && tar zxf nginx-1.10.3.tar.gz \
     && rm nginx-1.10.3.tar.gz \
     && cd nginx-1.10.3 \
@@ -49,9 +54,8 @@ RUN wget http://nginx.org/download/nginx-1.10.3.tar.gz \
     && make \
     && make install
 
-# Uninstall `wget` and `c,c++ compiler`
-RUN apt-get remove --purge -y build-essential \
-    && apt-get remove --purge -y wget
+# Remove dependency
+RUN apk del build-base wget perl tar
 
 COPY image_use /usr/local/
 
