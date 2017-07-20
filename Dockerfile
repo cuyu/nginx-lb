@@ -49,6 +49,10 @@ RUN wget http://nginx.org/download/nginx-1.10.3.tar.gz \
     && make \
     && make install
 
+# Uninstall `wget` and `c,c++ compiler`
+RUN apt-get remove --purge -y build-essential \
+    && apt-get remove --purge -y wget
+
 COPY image_use /usr/local/
 
 # forward request and error logs to docker log collector
