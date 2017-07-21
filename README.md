@@ -2,9 +2,9 @@
 
 A docker image to start a load balancer (with [sticky](https://bitbucket.org/nginx-goodies/nginx-sticky-module-ng) module) using Nginx.
 
-*Since we use the third-party module ([sticky](https://bitbucket.org/nginx-goodies/nginx-sticky-module-ng)), the Nginx must be compiled from the source. To reduce more image size, we use the **alpine** basic image. The built image size is 194MB which is acceptable now.*
+*Since we use the third-party module ([sticky](https://bitbucket.org/nginx-goodies/nginx-sticky-module-ng)), the Nginx must be compiled from the source. To reduce the image size, we use **alpine** as basic image. The built image size is 194MB which is acceptable now.*
 
-### Get start
+### Getting started
 
 1. Pull the docker image:
 
@@ -12,12 +12,12 @@ A docker image to start a load balancer (with [sticky](https://bitbucket.org/ngi
    docker pull cuyu/nginx-lb
    ```
 
-
    **OR** you can git clone this project and build the docker image at local:
 
    ```
    docker build -t nginx-lb .
    ```
+
 
 2. Create a file named `hosts`, with specific hostnames (include port) in it.
    For example:
